@@ -35,7 +35,7 @@ if __name__ == '__main__':
     # do search
     ucs = Ucs()
 
-    result = ucs.perform_ucs(start=node1, goal=node6)
+    result = ucs.run(start=node1, goal=node6)
 
     # output
     string_path = []
