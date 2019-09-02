@@ -45,7 +45,7 @@ class Astar(Algorithm):
         x_distance = abs(node.x_position - goal.x_position)
         y_distance = abs(node.y_position - goal.y_position)
 
-        return self.precision*(sqrt(x_distance*x_distance + y_distance*y_distance))
+        return self.precision*(sqrt(x_distance * x_distance + y_distance * y_distance))
 
     def get_weight_function(self) -> Callable[[Node, Node], float or int]:
         """
