@@ -15,7 +15,7 @@ class Astar(Algorithm):
     MANHATTAN_DISTANCE: str = 'MANHATTAN'
     EUCLIDEAN_DISTANCE: str = 'EUCLIDEAN'
 
-    def __init__(self, precision, heuristic=MANHATTAN_DISTANCE):
+    def __init__(self, precision: float or int, heuristic: str = MANHATTAN_DISTANCE):
         self.precision: float or int = precision
         self.heuristic: str = heuristic
 

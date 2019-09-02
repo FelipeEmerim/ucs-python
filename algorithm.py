@@ -1,5 +1,5 @@
 from queue import PriorityQueue
-from typing import Tuple
+from typing import Tuple, Callable
 
 from node import Node
 
@@ -94,7 +94,7 @@ class Algorithm:
         node.path_weight = weight
         queue.put((weight, node))
 
-    def get_weight_function(self) -> float or int:
+    def get_weight_function(self) -> Callable[[Node, Node], int or float]:
         """
         Must return the function that is responsible for calculating the weight of the path.
 
