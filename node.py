@@ -1,7 +1,9 @@
 """Package that contains the Node class."""
+from functools import total_ordering
 from typing import List, Tuple
 
 
+@total_ordering
 class Node:
 
     """
@@ -42,3 +44,27 @@ class Node:
 
         if node not in self.connections:
             self.connections.append((weight, node,))
+
+    def __eq__(self, other: 'Node') -> bool:
+        """
+        Implements equals operator, names are used in the comparison.
+
+        :param other: Node instance
+
+        :return: A boolean indicating the name comparison
+        """
+        if not isinstance(other, Node):
+            return NotImplemented
+        return self is other
+
+    def __lt__(self, other: 'Node') -> bool:
+        """
+        Implements the less than operator using the attribute node_name.
+
+        :param other: Node instance
+
+        :return: A boolean indicating the name comparison
+        """
+        if not isinstance(other, Node):
+            return NotImplemented
+        return self.node_name < other.node_name
