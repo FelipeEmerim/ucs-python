@@ -38,6 +38,7 @@ class Algorithm:
         """
 
         queue = PriorityQueue()
+        start.path_weight = 0
         queue.put((0, start))
 
         calculate_heuristic = self.get_weight_function()
@@ -56,15 +57,15 @@ class Algorithm:
 
             for c_weight, c_node in current_node.connections:
 
-                weight_so_far = weight + c_weight
-                heuristic = calculate_heuristic(current_node, goal)
+                weight_so_far = current_node.path_weight + c_weight
+                estimated_weight = weight_so_far + calculate_heuristic(c_node, goal)
 
-                self._add_to_queue(weight_so_far + heuristic, c_node, queue, node_path)
+                self._add_to_queue(weight_so_far, estimated_weight, c_node, queue, node_path)
 
         raise ValueError('No paths found')
 
     @staticmethod
-    def _add_to_queue(weight: int, node: Node, queue: PriorityQueue, path: list):
+    def _add_to_queue(weight: int, estimated_weight: float or int, node: Node, queue: PriorityQueue, path: list):
         """
         Add a path to a node to the queue given a weight.
 
@@ -81,6 +82,10 @@ class Algorithm:
         :return: None
         """
 
+        # if node was already visited by a lesser cost, do not requeue it
+        if node.path_weight <= weight:
+            return
+
         for q_weight, q_node in queue.queue:
             if q_node.node_name == node.node_name:
 
@@ -92,7 +97,7 @@ class Algorithm:
 
         node.path = path
         node.path_weight = weight
-        queue.put((weight, node))
+        queue.put((estimated_weight, node))
 
     def get_weight_function(self) -> Callable[[Node, Node], int or float]:
         """

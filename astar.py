@@ -10,13 +10,17 @@ class Astar(Algorithm):
     Class that contains logic related to the astar algorithm.
 
     Note that this is a didatic implementation and is not good in performance.
+    Attributes:
+        - heuristic_factor: Indicates the participation of the heuristic in weight calculation.
+                            The higher the most the heuristic will be taken into account.
+
     """
 
     MANHATTAN_DISTANCE: str = 'MANHATTAN'
     EUCLIDEAN_DISTANCE: str = 'EUCLIDEAN'
 
-    def __init__(self, precision: float or int, heuristic: str = MANHATTAN_DISTANCE):
-        self.precision: float or int = precision
+    def __init__(self, heuristic_factor: float or int, heuristic: str = MANHATTAN_DISTANCE):
+        self.precision: float or int = heuristic_factor
         self.heuristic: str = heuristic
 
     def manhattan_distance(self, node: Node, goal: Node) -> float or int:

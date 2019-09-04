@@ -1,4 +1,5 @@
 """Package that contains the Node class."""
+import math
 from functools import total_ordering
 from typing import List, Tuple
 
@@ -16,8 +17,11 @@ class Node:
         - path_weight: The weight of the path used to get to this node. Filled by the algorithm
         - x_position: The x position in the plane, used by astar
         - y_position: The y position in the plane, used by astar
+        - node_list: the list of nodes, would represent the graph itself
 
     """
+
+    node_list: ['Node'] = []
 
     def __init__(self, node_name: str, x_position: int = 0, y_position: int = 0):
         """
@@ -28,9 +32,10 @@ class Node:
         self.node_name: str = node_name
         self.connections: List[Tuple[int, Node]] = []
         self.path: Tuple[Node] = tuple()
-        self.path_weight: int or float = 0
+        self.path_weight: int or float = math.inf
         self.x_position: int = x_position
         self.y_position: int = y_position
+        self.node_list.append(self)
 
     def add_connection(self, node: 'Node', weight: float or int):
         """
@@ -44,6 +49,29 @@ class Node:
 
         if node not in self.connections:
             self.connections.append((weight, node,))
+
+    @classmethod
+    def reset_nodes(cls):
+        """
+        Clear node info used by the algorithms.
+
+        Avoid keeping multiple separate lists by keeping properties in the object.
+
+        :return: None
+        """
+
+        for node in cls.node_list:
+            node.path_weight = math.inf
+            node.path = tuple()
+
+    @classmethod
+    def clear_nodes(cls):
+        """
+        Remove all nodes from the node list.
+
+        :return: None
+        """
+        cls.node_list = []
 
     def __eq__(self, other: 'Node') -> bool:
         """
