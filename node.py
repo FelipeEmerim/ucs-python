@@ -47,7 +47,7 @@ class Node:
         :return: None
         """
 
-        if node not in self.connections:
+        if node not in self.connections and node is not self:
             self.connections.append((weight, node,))
 
     @classmethod
